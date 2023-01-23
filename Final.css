@@ -1,0 +1,50 @@
+body {
+  background-color: #aaa;
+  font-family: Sans-Serif;
+}
+
+canvas {
+  background-color: #fff;
+  border: 1px solid black;
+  width: 400px;
+  height: 300px;
+  display: block;
+}
+
+canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+#uiContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  font-family: monospace;
+  pointer-events: none;
+
+  text-shadow:
+    -1px -1px 0 #FFF,
+    1px -1px 0 #FFF,
+    -1px 1px 0 #FFF,
+    1px 1px 0 #FFF;
+}
+
+#ui {
+  opacity: 0.8;
+}
+
+#ui>div {
+  pointer-events: none;
+}
+
+#ui input,
+#ui label,
+#ui select,
+#ui option,
+#ui canvas,
+#ui button {
+  pointer-events: auto;
+}

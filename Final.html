@@ -1,0 +1,82 @@
+<head>
+  <title>Final Project</title>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="uiContainer">
+    <div id="ui">
+      <!--Buttons for projection-->
+      <button id="view1">Front Elevation</button><br>
+      <button id="view2">Elevation Oblique</button><br>
+      <button id="view3">Plan Oblique</button>
+      <button id="view4">Isometric</button><br>
+      <button id="view5">One-point Perspective</button><br>
+      <button id="view6">Three-point Perspective</button><br>
+      <!--Select List for Different Shapes and Button to Draw-->
+      <select id="select-list" multiple>
+        <option value="1">Cube</option>
+        <option value="2">Pyramid</option>
+        <option value="3">Octahedron</option>
+      </select>
+      <button id="draw-button">Draw</button>
+      <!--Sliders for position, rotation and scaling-->
+      <div id="x"></div>
+      <div id="y"></div>
+      <div id="z"></div>
+      <div id="angleX"></div>
+      <div id="angleY"></div>
+      <div id="angleZ"></div>
+      <div id="scaleX"></div>
+      <div id="scaleY"></div>
+      <div id="scaleZ"></div>
+    </div>
+  </div>
+
+  <!--CSS file link-->
+  <link rel="stylesheet" href="Final.css">
+
+  <!--Vertex Shader-->
+  <script id="vertex-shader-3d" type="x-shader/x-vertex">
+        attribute vec4 a_position;
+        attribute vec3 a_normal;
+        
+        uniform mat4 u_worldViewProjection;
+        uniform mat4 u_worldInverseTranspose;
+        
+        varying vec3 v_normal;
+        
+        void main() {
+          gl_Position = u_worldViewProjection * a_position;
+        
+          v_normal = mat3(u_worldInverseTranspose) * a_normal;
+        }
+  </script>
+
+  <!--Fragment Shader-->
+  <script id="fragment-shader-3d" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec3 v_normal;
+        
+        uniform vec3 u_reverseLightDirection;
+        uniform vec4 u_color;
+        
+        void main() {
+          vec3 normal = normalize(v_normal);
+        
+          float light = dot(normal, u_reverseLightDirection);
+        
+          gl_FragColor = u_color;
+        
+          gl_FragColor.rgb *= light;
+        }
+  </script>
+
+  <!--Scripts for our sliders, resizing canvas and compiling program-->
+  <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+  <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+  
+  <!--Main JS file-->
+  <script src="Final.js"></script>
+</body>
